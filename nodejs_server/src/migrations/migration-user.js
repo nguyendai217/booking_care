@@ -29,10 +29,13 @@ module.exports = {
       phoneNumber: {
         type: Sequelize.STRING,
       },
-      typeRole: {
+      roleId: {
         type: Sequelize.STRING,
       },
-      keyRole: {
+      positionId: {
+        type: Sequelize.STRING,
+      },
+      image: {
         type: Sequelize.STRING,
       },
       createdAt: {
