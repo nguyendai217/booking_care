@@ -8,8 +8,8 @@ const dbHost = process.env.DB_HOST;
 // Option 3: Passing parameters separately (other dialects)
 const sequelize = new Sequelize(dbName, dbUser, dbPass, {
   host: dbHost,
-  dialect: "postgres",
-  logging: false /* one of 'mysql' | 'mariadb' |  | 'mssql' */,
+  dialect: "postgres" /* one of 'mysql' | 'mariadb' |  | 'mssql' */,
+  logging: false,
 });
 
 let connectDB = async () => {
