@@ -7,6 +7,7 @@ let intWebRoutes = (app) => {
   router.get("/", homeController.getHomePage);
   router.get("/crud", homeController.getCRUD);
   router.post("/post-crud", homeController.postCRUD);
+  router.get("/getAllData", homeController.getAllData);
 
   return app.use("/", router);
 };

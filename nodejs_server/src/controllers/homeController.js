@@ -1,3 +1,4 @@
+import { json } from "body-parser";
 import CURDService from "../services/crudService";
 
 let getHomePage = (req, res) => {
@@ -13,9 +14,15 @@ let postCRUD = async (req, res) => {
   console.log(message);
   return res.send("crud");
 };
+
+let getAllData = async (req, res) => {
+  let data = await CURDService.getAllData();
+  return res.send(JSON.stringify(data));
+};
 // export object
 module.exports = {
   getHomePage: getHomePage,
   getCRUD: getCRUD,
   postCRUD: postCRUD,
+  getAllData: getAllData,
 };
