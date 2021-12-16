@@ -1,4 +1,3 @@
-import { json } from "body-parser";
 import CURDService from "../services/crudService";
 
 let getHomePage = (req, res) => {
