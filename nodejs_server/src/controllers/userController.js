@@ -5,14 +5,16 @@ let handleLogin = async (req, res) => {
 
   if (!email || !password) {
     res.status(500).json({
-      errorCode: 1,
-      message: "Input email or password is empty.",
+      code: 1,
+      message: "Input email or password is empty !",
     });
   }
 
   let userData = await user.handleLogin(email, password);
   return res.status(200).json({
-    data: userData,
+    code: userData.errCode,
+    message: userData.errMess,
+    data: userData.user ? userData.user : {},
   });
 };
 

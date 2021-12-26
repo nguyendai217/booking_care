@@ -6,11 +6,19 @@ let handleLogin = (email, password) => {
       let userData = {};
 
       // check user exist
-      let userExist = await checkUserEmail(email);
+      // let userExist = await checkUserEmail(email);
+      let userExist = await db.User.findOne({
+        where: { email: email },
+      });
+
+      console.log("check email", userExist);
       if (userExist) {
         let user = await db.User.findOne({
+          attributes: ["email", "roleId", "password"],
           where: { email: email },
+          raw: true,
         });
+
         if (user) {
           // compare password
           let checkPass = bcrypt.compareSync(password, user.password);
@@ -27,7 +35,7 @@ let handleLogin = (email, password) => {
           userData.errMess = "User is not found!";
         }
       } else {
-        userData.errCode = 1;
+        userData.errCode = 3;
         userData.errMess = "Email is not exist !";
       }
       resolve(userData);
@@ -37,42 +45,41 @@ let handleLogin = (email, password) => {
   });
 };
 
-let checkUserEmail = (userEmail) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let user = await db.User.findOne({
-        where: { email: userEmail },
-      });
+// let checkUserEmail = (userEmail) => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       let user = await db.User.findOne({
+//         where: { email: userEmail },
+//       });
+//       if (user) {
+//         resolve(true);
+//       } else {
+//         resolve(false);
+//       }
+//     } catch (error) {
+//       reject(error);
+//     }
+//   });
+// };
 
-      if (user) {
-        resolve(true);
-      } else {
-        resolve(false);
-      }
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
+// let comparePassword = (pass) => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       let user = await db.User.findOne({
+//         where: { email: userEmail },
+//       });
 
-let comparePassword = (pass) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let user = await db.User.findOne({
-        where: { email: userEmail },
-      });
+//       if (user) {
+//         let checkPassword = await bcrypt.compareSync(pass, user.password);
+//       }
 
-      if (user) {
-        let checkPassword = await bcrypt.compareSync(pass, user.password);
-      }
-
-      let password = user.password;
-      bcrypt.compareSync(password, hash);
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
+//       let password = user.password;
+//       bcrypt.compareSync(password, hash);
+//     } catch (error) {
+//       reject(error);
+//     }
+//   });
+// };
 
 module.exports = {
   handleLogin: handleLogin,
