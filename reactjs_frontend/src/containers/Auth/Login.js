@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import * as actions from "../../store/actions";
+import handleLoginApi from "../../services/userService";
 import "./Login.scss";
 
 class Login extends Component {
@@ -26,7 +27,13 @@ class Login extends Component {
     });
   };
 
-  handleLogin = () => {};
+  handleLogin = async () => {
+    try {
+      await handleLoginApi(this.state.username, this.state.password);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   handleShowPassword = () => {
     this.setState({
